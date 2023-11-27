@@ -9,11 +9,12 @@ public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI timerText;
     public GameObject titleScreen;
     public Button restartButton; 
-
     public List<GameObject> targetPrefabs;
 
+    public float timer;
     private int score;
     private float spawnRate = 1.5f;
     public bool isGameActive;
@@ -31,6 +32,21 @@ public class GameManagerX : MonoBehaviour
         score = 0;
         UpdateScore(0);
         titleScreen.SetActive(false);
+
+        
+    }
+
+    void Update()
+    {
+        if (isGameActive)
+        {
+            timerText.text = "Time: " + Mathf.Round(timer);
+            timer -= Time.deltaTime;
+        }
+        if (timer < 0)
+        {
+            GameOver();
+        }
     }
 
     // While game is active spawn a random target
